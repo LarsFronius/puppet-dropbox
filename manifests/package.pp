@@ -59,7 +59,8 @@ class dropbox::package {
     exec { 'kill dropbox':
       command => 'service dropbox stop',
       unless  => "test -f ${dropbox::config::dx_home}/.dropbox/sigstore.dbx",
-      before  => Exec['authorize-dropbox-user']
+      before  => Exec['authorize-dropbox-user'],
+      require => File['/etc/init.d/dropbox']
     }
 
     exec { 'authorize-dropbox-user':
